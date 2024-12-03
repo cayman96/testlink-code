@@ -1,19 +1,21 @@
-version: "3.9"
+name: 'testlink-test'
 networks: 
   testlink:
     name: testlink
 services:
   testlink-mysql:
     image: mysql:8.3.0
+    ports:
+    - 3306:3306
     networks:
     - testlink
     restart: unless-stopped
     user: mysql
     command: --default-authentication-plugin=mysql_native_password
     environment:
-    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT}
     volumes:
-    - mysql:/var/lib/mysql
+    - ${MYSQL_DIR}:/var/lib/mysql
 
   testlink-maildev:
     image: maildev/maildev:latest
@@ -27,7 +29,7 @@ services:
     - NODE_TLS_REJECT_UNAUTHORIZED=0
 
   testlink-app: &testlink-app
-    image: testlink:1.9.20
+    image: ${TESTLINK_IMG}
     build: .
     restart: unless-stopped
     depends_on:
@@ -38,11 +40,11 @@ services:
     networks:
     - testlink
     ports:
-    - 8080:80
+    - 8080:8080
     volumes:
-    - ./:/var/www/testlink
-    - ./logs:/var/testlink/logs
-    - ./upload_area:/var/testlink/upload_area
+    - ${TESTLINK_PATH}/gui/templates_c:/var/www/html/gui/templates_c
+    - ${TESTLINK_PATH}/logs:/var/testlink/logs
+    - ${TESTLINK_PATH}/upload_area:/var/testlink/upload_area
 
   testlink-restore:
     <<: *testlink-app
@@ -54,6 +56,3 @@ services:
     profiles:
     - tools
     command: ['/bin/bash', '-c', 'cd ./docs/db_sample && ./restore_sample.sh']
-
-volumes:
-  mysql:
