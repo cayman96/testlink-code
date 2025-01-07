@@ -11,7 +11,7 @@ EXPOSE 80
 WORKDIR /var/www/html
 
 COPY . ./
-COPY ./docker/php.ini-production /usr/local/etc/php/conf.d/php.ini
+COPY ./php.ini-production /usr/local/etc/php/conf.d/php.ini
 
 RUN chown -R www-data *
 RUN rm -rf docker && rm testlink_user_conf.sql
