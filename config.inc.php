@@ -396,12 +396,12 @@ $tlCfg->loggerFilter = null; // default defined on logger.class.php ;
  * Configure using custom_config.inc.php
  * @uses lib/functions/email_api.php
  */
-$g_smtp_host        = '[smtp_host_not_configured]';  # SMTP server MUST BE configured
+$g_smtp_host        = 'testlink-maildev';  # SMTP server MUST BE configured
 
 # Configure using custom_config.inc.php
-$g_tl_admin_email     = '[testlink_sysadmin_email_not_configured]'; # for problem/error notification
-$g_from_email         = '[from_email_not_configured]';  # email sender
-$g_return_path_email  = '[return_path_email_not_configured]';
+$g_tl_admin_email     = 'admin@testk.com'; # for problem/error notification
+$g_from_email         = 'notifier@testk.com';  # email sender
+$g_return_path_email  = 'noreply@testk.com';
 
 /**
  * Email notification priority (low by default)
@@ -434,7 +434,7 @@ $g_smtp_connection_mode = '';
  * will depend on the SMTP server configuration and hence others may be used.
  * @global int $g_smtp_port
  */
-$g_smtp_port = 25;                        
+$g_smtp_port = 1025;                        
 
 
 /**
